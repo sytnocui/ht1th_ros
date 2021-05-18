@@ -60,6 +60,7 @@ int main() {
             memset(buf, 0, sizeof(buf));
             int len = recv(conn, buf, sizeof(buf), 0);
             buf[len] = '\0';
+            
 
             //根据接收的信息执行命令
             switch (buf[0]){//改成传地址
