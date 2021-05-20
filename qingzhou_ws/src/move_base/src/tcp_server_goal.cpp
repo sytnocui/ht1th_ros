@@ -105,7 +105,18 @@ void ros_setgoal(char buf[])
     goal.target_pose.header.stamp = ros::Time::now();
     goal.target_pose.pose.position.x = tcp_x;
     goal.target_pose.pose.position.y = tcp_y;
-    goal.target_pose.pose.orientation.w = 1.0;
+
+    switch (buf[0]){
+    case 0x30:  goal.target_pose.pose.orientation.w = 1;
+                break;//前往等待区
+    case 0x40:  goal.target_pose.pose.orientation.w = 0.707;
+                goal.target_pose.pose.orientation.z = -0.707;
+                break;//前往装货区
+    case 0x50:  goal.target_pose.pose.orientation.w = 0.707;
+                goal.target_pose.pose.orientation.z = 0.707;
+                break;//前往卸货区
+    default:break;
+    }
 
     ROS_INFO("Sending goal");
     ac.sendGoal(goal);
