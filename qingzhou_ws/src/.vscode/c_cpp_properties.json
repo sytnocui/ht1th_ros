@@ -1,0 +1,38 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/sytnocui/ros_project/ht1th_ros/qingzhou_ws/devel/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/amcl/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/base_local_planner/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/carrot_planner/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/clear_costmap_recovery/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/costmap_2d/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/dwa_local_planner/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/global_planner/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/qingzhou_odom/imu_calibrate/imu_calib/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/qingzhou_odom/imu_tools/imu_complementary_filter/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/qingzhou_odom/imu_tools/imu_filter_madgwick/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/map_server/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/move_base/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/move_slow_and_clear/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/nav_core/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/navfn/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/qingzhou_odom/qingzhou_bringup/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/qingzhou_odom/robot_pose_ekf/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/rotate_recovery/include/**",
+        "/home/sytnocui/ros_project/socket_ws/src/socket/include/**",
+        "/home/sytnocui/ros_project/qingzhou_ws/src/voxel_grid/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
