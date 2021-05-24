@@ -38,10 +38,10 @@
       <param name="self_diagnose" value="false"/>
     </node>
 
-    <!--   <node pkg="qingzhou_bringup" type="odom_ekf.py" name="odom_ekf" output="screen">
+     <node pkg="qingzhou_bringup" type="odom_ekf.py" name="odom_ekf" output="screen">
       <remap from="input" to="robot_pose_ekf/odom_combined"/>
       <remap from="output" to="/odom_ekf"/>
-   </node> -->     
+   </node>      
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imulink"
     args="-0.08 0.0 0.05 0.0 0.0  0.0 /base_link /imu_link 50" />
