@@ -61,12 +61,20 @@ int main() {
             int len = recv(conn, buf, sizeof(buf), 0);
             buf[len] = '\0';
             
-
             //根据接收的信息执行命令
             switch (buf[0]){//改成传地址
-            case 0x30:ros_setgoal(buf);break;
-            case 0x40:ros_setgoal(buf);break;
-            case 0x50:ros_setgoal(buf);break;
+            /////////////////////////目标点指定///////////////////////////////////
+            case 0x30:  ros_setgoal(buf);break;//前往等待区
+            case 0x40:  ros_setgoal(buf);break;//前往装货区
+            case 0x50:  ros_setgoal(buf);break;//前往卸货区
+            /////////////////////////简单命令////////////////////////////////////
+            case 0x01:  printf("wdnmd");break;//复位
+            case 0x10:  printf("wdnmd");break;//运行
+            case 0x20:  printf("wdnmd");break;//停车
+            case 0x60:  printf("wdnmd");break;//打开视频
+            case 0x70:  printf("wdnmd");break;//关闭视频
+            /////////////////////////修改参数////////////////////////////////////
+            case 0x77:  printf("wdnmd");break;//修改参数
             default:break;
             }
         }
