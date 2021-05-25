@@ -17,6 +17,7 @@ typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseCl
 #include <arpa/inet.h>
 
 void ros_setgoal(char buf[]);
+void ros_ctrlpara_modify(char buf[]);
 
 int main() {
     std::cout << "This is server" << std::endl;
@@ -136,4 +137,9 @@ void ros_setgoal(char buf[])
     ROS_INFO("The base failed to move forward 1 meter for some reason");
 
     return;
+}
+
+void ros_ctrlpara_modify(char buf[])
+{
+    //使用列表或数组
 }
