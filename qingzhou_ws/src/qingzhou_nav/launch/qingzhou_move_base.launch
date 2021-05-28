@@ -3,7 +3,7 @@
   <master auto="start"/>
 
   <include file="$(find qingzhou_nav)/launch/ydlidar.launch" />
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_nav)/maps/test20201120.yaml" output="screen"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find qingzhou_nav)/maps/20-01-12am2.yaml" output="screen"/>
 
   <include file="$(find qingzhou_nav)/launch/amcl.launch" />
 
