@@ -1,6 +1,6 @@
 ht1th:
-	robot_state: 0         #状态机 0-    1-     2-
-  visual_nav: false      #视觉导航 false-关闭   true-开启
+  robot_state: 0               #0-    1-     2-
+  visual_nav: false            #false-close   true-open
   pose_x: 0.0
   pose_y: 0.0
   pose_yaw: 0.0
