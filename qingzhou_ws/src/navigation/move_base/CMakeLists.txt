@@ -67,9 +67,6 @@ set_target_properties(move_base_node PROPERTIES OUTPUT_NAME move_base)
 add_executable(simple_navigation_goals src/simple_navigation_goals.cpp)
 target_link_libraries(simple_navigation_goals ${catkin_LIBRARIES})
 
-add_executable(tcp_server_goal src/tcp_server_goal.cpp)
-target_link_libraries(tcp_server_goal ${catkin_LIBRARIES})
-
 
 install(
     TARGETS
