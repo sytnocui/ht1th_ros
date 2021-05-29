@@ -26,6 +26,4 @@
     <!--    <remap from="/odom" to="/odom_ekf"/> --> 
   </node>
 
-  <rosparam file="$(find qingzhou_nav)/config/ht1th.yaml" command="load" /> <!--ht1th_para--> 
-
 </launch>
