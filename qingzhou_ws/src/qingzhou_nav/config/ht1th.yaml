@@ -1,9 +1,18 @@
 ht1th:
-  robot_state: 0               #0-    1-     2-
-  visual_nav: false            #false-close   true-open
-  pose_x: 0.0
-  pose_y: 0.0
-  pose_yaw: 0.0
-  vel_left: 0.0
-  vel_right: 0.0
-  vel_angle: 0.0
+  viewpara:
+    robot_state: 0               #0-    1-     2-
+    visual_nav: false            #false-close   true-open
+    pose_x: 0.0
+    pose_y: 0.0
+    pose_yaw: 0.0
+    vel_left: 0.0
+    vel_right: 0.0
+    vel_angle: 0.0
+  ctrlpara:
+    test0: 0.0
+    test1: 0.0
+    test2: 0.0
+    test3: 0.0
+    test4: 0.0  
+    test5: 0.0
+

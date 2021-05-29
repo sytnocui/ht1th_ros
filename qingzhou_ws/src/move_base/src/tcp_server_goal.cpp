@@ -75,7 +75,7 @@ int main() {
             case 0x60:  printf("wdnmd");break;//打开视频
             case 0x70:  printf("wdnmd");break;//关闭视频
             /////////////////////////修改参数////////////////////////////////////
-            case 0x77:  printf("wdnmd");break;//修改参数
+            case 0x77:  ros_ctrlpara_modify(buf);break;//修改参数
             default:break;
             }
         }
@@ -139,7 +139,42 @@ void ros_setgoal(char buf[])
     return;
 }
 
+#define CTRLPARA_NUM 6 //控制参数的个数
+
 void ros_ctrlpara_modify(char buf[])
 {
-    //使用列表或数组
+    //使用数组
+    float ctrlpara[CTRLPARA_NUM] ={0};//存储传回来的值的数组
+    char *pctrlpara = NULL;//指针
+    //循环赋值
+    for(int i=0;i<CTRLPARA_NUM;i++)
+    {
+        pctrlpara = &buf[i*4+1];
+        memcpy(&ctrlpara[i], pctrlpara, sizeof(float));
+    }
+    
+    //ROS节点初始化
+    int argc = 0;
+    char** argv = NULL;
+    ros::init(argc,argv,"ctrlpara_modify");
+    //创建节点句柄，到底是啥意思？？？？？？？？？？？？？
+    ros::NodeHandle node;
+
+    //设置背景颜色参数
+    ros::param::set("/ht1th/ctrlpara/test0",ctrlpara[0]);
+    ros::param::set("/ht1th/ctrlpara/test1",ctrlpara[1]);
+    ros::param::set("/ht1th/ctrlpara/test2",ctrlpara[2]);
+    ros::param::set("/ht1th/ctrlpara/test3",ctrlpara[3]);
+    ros::param::set("/ht1th/ctrlpara/test4",ctrlpara[4]);
+    ros::param::set("/ht1th/ctrlpara/test5",ctrlpara[5]);
+
+    //读取背景颜色参数
+    ros::param::get("/ht1th/ctrlpara/test0",ctrlpara[0]);
+    ros::param::get("/ht1th/ctrlpara/test1",ctrlpara[1]);
+    ros::param::get("/ht1th/ctrlpara/test2",ctrlpara[2]);
+    ros::param::get("/ht1th/ctrlpara/test3",ctrlpara[3]);
+    ros::param::get("/ht1th/ctrlpara/test4",ctrlpara[4]);
+    ros::param::get("/ht1th/ctrlpara/test5",ctrlpara[5]);
+    ROS_INFO("Get Backgroud Color[%.2f,%.2f,%.2f,%.2f,%.2f,%.2f]",
+    ctrlpara[0], ctrlpara[1], ctrlpara[2],ctrlpara[3],ctrlpara[4],ctrlpara[5]);
 }
