@@ -9,6 +9,7 @@ ht1th:
     vel_right: 0.0
     vel_angle: 0.0
   ctrlpara:
+    img_sw: false               #img_udp_transfrom_switch  false-close    true-open
     test0: 0.0
     test1: 0.0
     test2: 0.0
