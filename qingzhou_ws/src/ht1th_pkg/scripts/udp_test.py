@@ -34,6 +34,8 @@ if __name__=="__main__":
         client_socket.sendto(msg, server_address) #将msg内容发送给指定接收方
         time.sleep(1)
 
+        
+
 
 
     

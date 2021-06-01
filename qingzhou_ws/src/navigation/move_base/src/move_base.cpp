@@ -866,6 +866,8 @@ namespace move_base {
         recovery_index_ = 0;
     }
 
+    //在switch之前该检测的错误都检测完了
+
     //the move_base state machine, handles the control logic for navigation
     switch(state_){
       //if we are in a planning state, then we'll attempt to make a plan

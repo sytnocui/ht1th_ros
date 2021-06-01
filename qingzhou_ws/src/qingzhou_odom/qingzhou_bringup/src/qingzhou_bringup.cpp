@@ -190,7 +190,7 @@ void actuator::sendCarInfoKernel()
     unsigned char buf[23] = {0};
     buf[0] = 0xa5;	                                        
     buf[1] = 0x5a;	                                        
-    buf[2] = 0x06;	                                        
+    buf[2] = 0x06;	                                            
 
     buf[3] = (int)moveBaseControl.TargetAngleDir;	    //targetangleDirection 0-->go straight,0x10-->turn left,0x20-->turn right (not used)
     buf[4] = (int)abs(moveBaseControl.TargetAngle);	    //targetangle
