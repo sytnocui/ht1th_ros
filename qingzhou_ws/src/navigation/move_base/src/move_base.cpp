@@ -908,6 +908,12 @@ namespace move_base {
         }
         
         {
+        //判断是否为视觉导航，如果是，直接跳出，如果不是，继续运行
+        int visual_flag = 0;
+        ros::param::get("/ht1th/viewpara/visual_nav",visual_flag);
+        if(!visual_flag)
+        {
+        //从这一行往下的大括号里是源代码，有发布cmd_vel的步骤，我在外面套了个大括号判断一下进不进这个大括号
          boost::unique_lock<costmap_2d::Costmap2D::mutex_t> lock(*(controller_costmap_ros_->getCostmap()->getMutex()));
         
         if(tc_->computeVelocityCommands(cmd_vel)){
@@ -943,6 +949,7 @@ namespace move_base {
             planner_cond_.notify_one();
             lock.unlock();
           }
+        }
         }
         }
 
