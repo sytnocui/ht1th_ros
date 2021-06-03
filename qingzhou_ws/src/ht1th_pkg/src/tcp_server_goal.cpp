@@ -117,12 +117,15 @@ void ros_setgoal(char buf[])
 
     switch (buf[0]){
     case 0x30:  goal.target_pose.pose.orientation.w = 1;
+                ros::param::set("/ht1th/viewpara/nav_state",1);//设置状态机towait
                 break;//前往等待区
     case 0x40:  goal.target_pose.pose.orientation.w = 0.707;
                 goal.target_pose.pose.orientation.z = -0.707;
+                ros::param::set("/ht1th/viewpara/nav_state",2);//设置状态机toload
                 break;//前往装货区
     case 0x50:  goal.target_pose.pose.orientation.w = 0.707;
                 goal.target_pose.pose.orientation.z = 0.707;
+                ros::param::set("/ht1th/viewpara/nav_state",3);//设置状态机tounload
                 break;//前往卸货区
     default:break;
     }
@@ -131,10 +134,19 @@ void ros_setgoal(char buf[])
     ac.sendGoal(goal);
     ac.waitForResult();
 
+    //TODO:SimpleClientGoalState有没有必要换成正式的
     if(ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-    ROS_INFO("Hooray, the base moved 1 meter forward");
+    {
+        ROS_INFO("goal reached");
+        //设置状态机reached
+        ros::param::set("/ht1th/viewpara/nav_state",4);
+    }
     else
-    ROS_INFO("The base failed to move forward 1 meter for some reason");
+    {
+        ROS_INFO("goal failed");
+        //设置状态机wrong
+        ros::param::set("/ht1th/viewpara/nav_state",6);
+    }
 
     return;
 }
@@ -160,7 +172,7 @@ void ros_ctrlpara_modify(char buf[])
     //创建节点句柄，到底是啥意思？？？？？？？？？？？？？
     ros::NodeHandle node;
 
-    //设置背景颜色参数
+    //设置ctrlpara
     ros::param::set("/ht1th/ctrlpara/test0",ctrlpara[0]);
     ros::param::set("/ht1th/ctrlpara/test1",ctrlpara[1]);
     ros::param::set("/ht1th/ctrlpara/test2",ctrlpara[2]);
@@ -168,7 +180,7 @@ void ros_ctrlpara_modify(char buf[])
     ros::param::set("/ht1th/ctrlpara/test4",ctrlpara[4]);
     ros::param::set("/ht1th/ctrlpara/test5",ctrlpara[5]);
 
-    //读取背景颜色参数
+    //读取ctrlpara
     ros::param::get("/ht1th/ctrlpara/test0",ctrlpara[0]);
     ros::param::get("/ht1th/ctrlpara/test1",ctrlpara[1]);
     ros::param::get("/ht1th/ctrlpara/test2",ctrlpara[2]);
