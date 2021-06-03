@@ -21,6 +21,7 @@ def udp_send():
     udp_img_send()
 
 def udp_viewpara_send():
+    viewpara = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
     #读取参数服务器
     viewpara[0] = rospy.get_param("/ht1th/viewpara/nav_state")
     viewpara[1] = rospy.get_param("/ht1th/viewpara/visual_state")
@@ -53,10 +54,7 @@ def light_check():
     pass
 
 #####################################################################################
-viewpara = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
-
-#TODO:全局变量写在main下面行吗
 if __name__=="__main__":
     #client 发送端初始化
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -83,6 +81,8 @@ if __name__=="__main__":
                 #车道线检测
                 lane_check()
                 pass
+        
+        udp_thread()
 
         #按照循环频率延时
         rate.sleep()
