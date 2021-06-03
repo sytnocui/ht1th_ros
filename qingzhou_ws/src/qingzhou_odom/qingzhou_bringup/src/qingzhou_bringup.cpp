@@ -202,7 +202,11 @@ void actuator::sendCarInfoKernel()
     unsigned char sum = 0;
     for(int i = 2; i < 19; ++i)                             
         sum += buf[i];
-    buf[9] = (unsigned char)(sum);                      
+    buf[9] = (unsigned char)(sum);   
+    printf("  \nmoveBaseControl.TargetAngle = %d \n" ,  buf[4]);
+    printf("TargetAngleDir = %d\n", buf[3]) ;     
+printf("TargetSpeed = %d\n", buf[5]) ;
+printf("TargetShiftPosition = %d\n", buf[7]) ;
     size_t writesize = ser.write(buf,10);
 }
 

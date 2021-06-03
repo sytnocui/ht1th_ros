@@ -5,10 +5,10 @@
       <param name="mcuserialport" value="/dev/stm32board" type="string"/> 
       <param name="mcubaudrate" value = "115200" type = "int"/> 
 
-      <param name="calibrate_lineSpeed" value = "0" type = "int"/> 
+      <param name="calibrate_lineSpeed" value = "1" type = "int"/> 
       <param name="calibrate_angularSpeed" value = "0" type = "int"/> 
-      <param name="ticksPerMeter" value = "1200" type = "int"/>      <!-- 1235  -->
-      <param name="ticksPer2PI" value = "3059" type = "int"/>             <!--  26500  5800  --> 
+      <param name="ticksPerMeter" value = "5902" type = "int"/>      <!-- 1235  -->
+      <param name="ticksPer2PI" value = "20412" type = "int"/>             <!--  26500  5800  --> 
       
     <node pkg="imu_calib" type="apply_calib" name="apply_calib" output="screen" respawn="false">
       <param name="calib_file" value="$(find imu_calib)/../launch/imu_calib.yaml" />
@@ -44,5 +44,5 @@
    </node>      
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imulink"
-    args="-0.08 0.0 0.05 0.0 0.0  0.0 /base_link /imu_link 50" />
+    args="-0.08 0.0 0.08 0.0 0.0  0.0 /base_link /imu_link 50" />
 </launch>
