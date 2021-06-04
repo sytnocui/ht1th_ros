@@ -909,9 +909,10 @@ namespace move_base {
         
         {
         //判断是否为视觉导航，如果是，直接跳出，如果不是，继续运行
-        int visual_flag = 0;
-        ros::param::get("/ht1th/viewpara/visual_nav",visual_flag);
-        if(visual_flag == 2 || visual_flag == 4 ||visual_flag == 6)//检测到红灯，黄灯或车道线
+        //0-close   1-light_en   2-light_dis   5-check_lane   6-lane
+        int visual_state = 0;
+        ros::param::get("/ht1th/viewpara/visual_state",visual_state);
+        if(visual_state == 2 || visual_state == 6)//检测到红灯，黄灯或车道线
         {
             //以上三种情况都不发布消息
             //TODO:如果报错的话可以试着把这个通过参数服务器设成视觉的，但目前估计不会出问题
