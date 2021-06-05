@@ -181,7 +181,7 @@ void ros_ctrlpara_modify(char buf[])
     ros::param::set("/ht1th/ctrlpara/test5",ctrlpara[5]);
 
     //读取ctrlpara
-    ros::param::get("/ht1th/ctrlpara/test0",ctrlpara[0]);
+    ros::param::get("/ht1th/ctrlpara/light_distance",ctrlpara[0]);
     ros::param::get("/ht1th/ctrlpara/test1",ctrlpara[1]);
     ros::param::get("/ht1th/ctrlpara/test2",ctrlpara[2]);
     ros::param::get("/ht1th/ctrlpara/test3",ctrlpara[3]);

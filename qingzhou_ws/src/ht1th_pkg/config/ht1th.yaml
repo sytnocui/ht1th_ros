@@ -10,7 +10,7 @@ ht1th:
     vel_angle: 0.0
   ctrlpara:
     img_sw: 0               #img_udp_transfrom_switch  false-close    true-open
-    test0: 0.0
+    light_distance: 480000.0
     test1: 0.0
     test2: 0.0
     test3: 0.0

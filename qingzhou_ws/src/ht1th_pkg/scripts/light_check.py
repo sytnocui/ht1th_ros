@@ -20,8 +20,8 @@ def LightDetect(ImgOri):
     for Position in CamPosition:
         Distance = Distance + Position**2
 
-    if (0 or 1 in LightColors) and Distance>480000:
-        #TODO Distance值待定
+    if (0 or 1 in LightColors) and (Distance > 480000):
+        #TODO Distance阈值待定
         return 0
     else:
         return 1
