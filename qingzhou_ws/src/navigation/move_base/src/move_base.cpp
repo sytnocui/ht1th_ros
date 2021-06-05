@@ -866,6 +866,8 @@ namespace move_base {
         recovery_index_ = 0;
     }
 
+    //在switch之前该检测的错误都检测完了
+
     //the move_base state machine, handles the control logic for navigation
     switch(state_){
       //if we are in a planning state, then we'll attempt to make a plan
@@ -906,6 +908,18 @@ namespace move_base {
         }
         
         {
+        //判断是否为视觉导航，如果是，直接跳出，如果不是，继续运行
+        //0-close   1-light_en   2-light_dis   5-check_lane   6-lane
+        int visual_state = 0;
+        ros::param::get("/ht1th/viewpara/visual_state",visual_state);
+        if(visual_state == 2 || visual_state == 6)//检测到红灯，黄灯或车道线
+        {
+            //以上三种情况都不发布消息
+            //TODO:如果报错的话可以试着把这个通过参数服务器设成视觉的，但目前估计不会出问题
+        }
+        else
+        {
+        //从这一行往下的大括号里是源代码，有发布cmd_vel的步骤，我在外面套了个大括号判断一下进不进这个大括号
          boost::unique_lock<costmap_2d::Costmap2D::mutex_t> lock(*(controller_costmap_ros_->getCostmap()->getMutex()));
         
         if(tc_->computeVelocityCommands(cmd_vel)){
@@ -941,6 +955,7 @@ namespace move_base {
             planner_cond_.notify_one();
             lock.unlock();
           }
+        }
         }
         }
 

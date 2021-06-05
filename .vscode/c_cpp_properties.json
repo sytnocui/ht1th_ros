@@ -1,0 +1,16 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "${workspaceFolder}/**",
+        "/opt/ros/melodic/include"
+      ],
+      "name": "ROS"
+    }
+  ],
+  "version": 4
+}
