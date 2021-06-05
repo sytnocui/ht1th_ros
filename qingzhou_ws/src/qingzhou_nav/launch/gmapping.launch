@@ -10,7 +10,7 @@
     <param name="base_frame" value="/base_link" />
     <param name="odom_frame" value="/odom" />
 <!--       <param name="odom_frame" value="odom_combined"/> -->
-      <param name="map_update_interval" value="7.0"/>  <!--地图每次更新需要的时间-->
+      <param name="map_update_interval" value="6.0"/>  <!--地图每次更新需要的时间-->
       
       <param name="maxUrange" value="7.0"/>  <!--探测的最大可用范围-->
       <param name="sigma" value="0.05"/>   <!--endpoint匹配标准差-->
