@@ -1,4 +1,6 @@
+#! /usr/bin/python3
 # -*- coding:utf-8 _*-
+
 """
 @author:Cui Baoyi
 @time: 2021/03/20

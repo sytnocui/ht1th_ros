@@ -1,3 +1,6 @@
+#! /usr/bin/python3
+# -*- coding:utf-8 _*-
+
 import torch, os
 from _02PipeDatasetLoader import *
 from _03Unet import *
@@ -7,12 +10,11 @@ from cam_capture import *
 
 # 设置参数
 Device = torch.device('cuda:0')  # 指定CUDA设备
-ModelPath = './Output/0700.pt'  # 模型路径
+# ModelPath = '../0200.pt'  # 模型路径
 
 # 模型初始化
-Unet = UNet(in_channels=3, out_channels=1, init_features=4, WithActivateLast=True, ActivateFunLast=torch.sigmoid).to(
-    Device)
-Unet.load_state_dict(torch.load(ModelPath, map_location=Device))
+Unet = UNet(in_channels=3, out_channels=1, init_features=4, WithActivateLast=True, ActivateFunLast=torch.sigmoid).to(Device)
+Unet.load_state_dict(torch.load('../0200.pt', map_location=Device))
 
 # 逆透视参数设定
 H = np.array([[-0.51050696, -2.11815651, 642.48018518],

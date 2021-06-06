@@ -1,5 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#! /usr/bin/python3
+# -*- coding:utf-8 _*-
+
 # 该例程设置/读取海龟例程中的参数
 
 import sys
@@ -14,6 +15,7 @@ from geometry_msgs.msg import Twist
 #视觉代码
 from cam_capture import *
 from lane_check import *
+
 ####################################################################################UDP
 def udp_thread():#udp传输子线程函数
     timer = threading.Thread(target=udp_send)
@@ -72,13 +74,13 @@ def lane_check(ImgOri):
 if __name__=="__main__":
     #client 发送端初始化
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_address = ("127.0.0.1", 8888)  # 接收方 服务器的ip地址和端口号
+    server_address = ("192.168.43.237", 8888)  # 接收方 服务器的ip地址和端口号
 
     #初始化ros节点
     rospy.init_node("ht1th_visual",anonymous=True)
 
     #创建一个Publisher,发布cmd_vel的topic,消息类型为geometry_msgs::Twist,没有队列
-    visual_vel_pub = rospy.Publisher("cmd_vel",Twist,queue_size=None)
+    visual_vel_pub = rospy.Publisher("cmd_vel",Twist,queue_size=1)
 
     #设置循环的频率
     rate = rospy.Rate(10)

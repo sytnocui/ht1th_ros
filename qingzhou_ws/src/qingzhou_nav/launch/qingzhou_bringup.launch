@@ -7,8 +7,8 @@
 
       <param name="calibrate_lineSpeed" value = "1" type = "int"/> 
       <param name="calibrate_angularSpeed" value = "0" type = "int"/> 
-      <param name="ticksPerMeter" value = "5902" type = "int"/>      <!-- 1235  -->
-      <param name="ticksPer2PI" value = "20412" type = "int"/>             <!--  26500  5800  --> 
+      <param name="ticksPerMeter" value = "5826" type = "int"/>      <!-- 1235  -->
+      <param name="ticksPer2PI" value = "22089" type = "int"/>             <!--  26500  5800  --> 
       
     <node pkg="imu_calib" type="apply_calib" name="apply_calib" output="screen" respawn="false">
       <param name="calib_file" value="$(find imu_calib)/../launch/imu_calib.yaml" />

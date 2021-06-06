@@ -1,3 +1,6 @@
+#! /usr/bin/python3
+# -*- coding:utf-8 _*-
+
 from _02CalculatePositon import *
 from _03TrafficLight import *
 
