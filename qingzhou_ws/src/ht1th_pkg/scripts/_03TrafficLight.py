@@ -29,6 +29,7 @@ def JudgeLightColor(Light):
 
 def TrafficLight(MarkerROI, Img):
 	LightColors = []
+	LightImg = []
 	if MarkerROI is not None:  # 如果检测到Marker，CamPosition和MarkerROI就不是None
 		# global lastROI
 		# lastROI = MarkerROI # 用全局变量lastROI保存前一时刻的状态
@@ -85,4 +86,4 @@ def TrafficLight(MarkerROI, Img):
 
 		cv2.imshow('LightImg', LightImg)
 		cv2.waitKey(15)
-	return LightColors, LightImg
+		return LightColors, LightImg

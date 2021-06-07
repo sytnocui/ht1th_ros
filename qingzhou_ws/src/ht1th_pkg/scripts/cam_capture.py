@@ -39,6 +39,7 @@ def gstreamer_pipeline(  # 定义GStreamerPipeline
 
 def cam_capture():#拍摄照片函数
     cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
+    print(cap.isOpened())
     if cap.isOpened():
         ret, img = cap.read()
         if ret == True:

@@ -15,7 +15,7 @@ K = np.array([[228.82, 0, 601.32],
               [0, 228.59, 363.39],
               [0, 0, 1]])
 Dis = np.array([0.00490, 0.00105, 0.00012, 0.00047])
-EMap = np.loadtxt('EMap.txt')
+EMap = np.loadtxt('/home/wheeltec/ht1th_ros/qingzhou_ws/src/ht1th_pkg/model/EMap.txt')
 
 # 解算位姿的函数
 def CalculatePositon(Point3D, Point2D, K, Dis):

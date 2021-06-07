@@ -15,6 +15,7 @@ from geometry_msgs.msg import Twist
 #视觉代码
 from cam_capture import *
 from lane_check import *
+from light_check import *
 
 ####################################################################################UDP
 def udp_thread():#udp传输子线程函数
@@ -49,7 +50,7 @@ def udp_img_send():
 def light_check(ImgOri):
     isWait = LightDetect(ImgOri)
     #TODO：加什么时候赋成pass_light
-    pass
+    # pass
     if isWait:
         rospy.set_param("/ht1th/viewpara/visual_state",1)#可通行1
     else:
@@ -72,6 +73,8 @@ def lane_check(ImgOri):
 #####################################################################################
 
 if __name__=="__main__":
+    # Restart GStreamer
+    # os.system('sudo systemctl restart nvargus-daemon')
     #client 发送端初始化
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_address = ("192.168.43.237", 8888)  # 接收方 服务器的ip地址和端口号
@@ -88,8 +91,12 @@ if __name__=="__main__":
     while not rospy.is_shutdown():
         #0-stop    1-towait     2-toload    3-tounload   4-reached    5-pass_light    6-wrong 
         nav_state = rospy.get_param("/ht1th/viewpara/nav_state")#获取机器人状态
-        if nav_state == 1 or 3:
+        if (nav_state == 1) or (nav_state == 3):
             ImgOri = cam_capture()#拍照
+            print(type(ImgOri))
+            cv2.imwrite('Img.png',ImgOri)
+            
+            print('Camera Opened')
             if nav_state == 3:#前往卸货区
                 light_check(ImgOri)#红绿灯检测
             elif nav_state == 1:#前往等待区
