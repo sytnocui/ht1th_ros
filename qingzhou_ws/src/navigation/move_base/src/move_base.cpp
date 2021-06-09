@@ -914,8 +914,11 @@ namespace move_base {
         ros::param::get("/ht1th/viewpara/visual_state",visual_state);
         if(visual_state == 2 || visual_state == 6)//检测到红灯，黄灯或车道线
         {
-            //以上三种情况都不发布消息
-            //TODO:如果报错的话可以试着把这个通过参数服务器设成视觉的，但目前估计不会出问题
+            //TODO:如果报错的话可以试着把这个通过参数服务器设成视觉的
+	    	if(visual_state == 2)
+	    	{
+				publishZeroVelocity();
+			}
         }
         else
         {

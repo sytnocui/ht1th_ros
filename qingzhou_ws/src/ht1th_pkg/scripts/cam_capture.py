@@ -45,3 +45,5 @@ def cam_capture():#拍摄照片函数
         if ret == True:
             UndistImg = cv2.undistort(img, K, Dist)
             return UndistImg
+    cap.release()
+

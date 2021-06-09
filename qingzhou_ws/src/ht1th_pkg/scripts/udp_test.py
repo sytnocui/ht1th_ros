@@ -8,6 +8,7 @@ import os
 import threading
 import struct
 import socket
+import time
 
 import rospy
 from geometry_msgs.msg import Twist
@@ -24,6 +25,7 @@ def udp_thread():#udp传输子线程函数
 
 def udp_send():
     udp_viewpara_send()
+    time.sleep(0.1)
     udp_img_send()
 
 def udp_viewpara_send():
@@ -42,7 +44,8 @@ def udp_viewpara_send():
     client_socket.sendto(msg, server_address) #将msg内容发送给指定接收方
 
 def udp_img_send():
-    pass
+    resizedImg = cv2.resize(ImgOri, (int(ImgOri.shape[1]/4), int(ImgOri.shape[0]/4)))
+    client_socket.sendto(resizedImg, server_address)
 #####################################################################################VISUAL
 #0-close   1-light_en   2-light_dis   5-check_lane   6-lane
 
@@ -87,15 +90,19 @@ if __name__=="__main__":
 
     #设置循环的频率
     rate = rospy.Rate(10)
-
+    
+    ImgOri = cam_capture()
+    cv2.waitKey(10)
+    print(ImgOri.shape)
     while not rospy.is_shutdown():
         #0-stop    1-towait     2-toload    3-tounload   4-reached    5-pass_light    6-wrong 
         nav_state = rospy.get_param("/ht1th/viewpara/nav_state")#获取机器人状态
         if (nav_state == 1) or (nav_state == 3):
             ImgOri = cam_capture()#拍照
+            cv2.waitKey(10)
             print(type(ImgOri))
-            cv2.imwrite('Img.png',ImgOri)
             
+            print(ImgOri.shape)
             print('Camera Opened')
             if nav_state == 3:#前往卸货区
                 light_check(ImgOri)#红绿灯检测
