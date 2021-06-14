@@ -11,11 +11,13 @@ import socket
 import time
 
 import rospy
+#import tf
+
 from geometry_msgs.msg import Twist
 
 #视觉代码
 from cam_capture import *
-from lane_check import *
+from lane_check_opencv import *
 from light_check import *
 
 ####################################################################################UDP
@@ -64,29 +66,43 @@ def lane_check(ImgOri):
     if isNaN == 0:
         rospy.set_param("/ht1th/viewpara/visual_state",5)#结尾如果没检测到车道线就赋成5
     else:
-        lane_angular = 0.01 * lane_position#TODO:计算角速度
+        print('lane_position:', lane_position)
+        if -400<lane_position<400:
+            lane_angular = 0.001 * lane_position#TODO:计算角速度
+        else:
+            lane_angular = 0
         rospy.set_param("/ht1th/viewpara/visual_state",6)#检测到车道线赋为6
         #发布话题
         vel_msg = Twist()
-        vel_msg.linear.x=0.5#TODO:更改速度
+        vel_msg.linear.x=0.3#TODO:更改速度
         vel_msg.angular.z= lane_angular
         visual_vel_pub.publish(vel_msg)
         rospy.loginfo("[%0.2f m/s,%0.2f rad/s]",vel_msg.linear.x,vel_msg.angular.z)
 
 #####################################################################################
 
+def robot_tf_update():
+   pose_x = rospy.get_param('/ht1th/viewpara/pose_x')
+   pose_x = rospy.get_param('/ht1th/viewpara/pose_y')
+
+
 if __name__=="__main__":
     # Restart GStreamer
     # os.system('sudo systemctl restart nvargus-daemon')
     #client 发送端初始化
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_address = ("192.168.43.237", 8888)  # 接收方 服务器的ip地址和端口号
+    server_address = ("192.168.43.86", 8888)  # 接收方 服务器的ip地址和端口号
 
     #初始化ros节点
     rospy.init_node("ht1th_visual",anonymous=True)
 
     #创建一个Publisher,发布cmd_vel的topic,消息类型为geometry_msgs::Twist,没有队列
     visual_vel_pub = rospy.Publisher("cmd_vel",Twist,queue_size=1)
+    
+    #tf
+    pose_x = 0.0
+    pose_y = 0.0
+    pose_yaw = 0.0
 
     #设置循环的频率
     rate = rospy.Rate(10)
@@ -100,15 +116,21 @@ if __name__=="__main__":
         if (nav_state == 1) or (nav_state == 3):
             ImgOri = cam_capture()#拍照
             cv2.waitKey(10)
-            print(type(ImgOri))
+            # print(type(ImgOri))
             
-            print(ImgOri.shape)
+            # print(ImgOri.shape)
             print('Camera Opened')
             if nav_state == 3:#前往卸货区
+                if pose_x <= 1.3 and pose_y <= -7.5:
+                   rospy.set_param('/ht1th/viewpara/nav_state', 5)
                 light_check(ImgOri)#红绿灯检测
-            elif nav_state == 1:#前往等待区
+            elif nav_state == 1: #and pose_y >= -5:#前往等待区
+                if pose_y >= -1:
+                    rospy.set_param('/ht1th/viewpara/nav_state', 6)
                 lane_check(ImgOri)#车道线检测
         
+        robot_tf_update()
+
         udp_thread()
 
         #按照循环频率延时

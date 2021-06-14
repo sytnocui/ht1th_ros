@@ -7,8 +7,8 @@
 
       <param name="calibrate_lineSpeed" value = "1" type = "int"/> 
       <param name="calibrate_angularSpeed" value = "0" type = "int"/> 
-      <param name="ticksPerMeter" value = "5826" type = "int"/>      <!-- 1235  -->
-      <param name="ticksPer2PI" value = "22089" type = "int"/>             <!--  26500  5800  --> 
+      <param name="ticksPerMeter" value = "5646" type = "int"/>      <!-- 1235  -->
+      <param name="ticksPer2PI" value = "14017" type = "int"/>             <!--  26500  5800  --> 
       
     <node pkg="imu_calib" type="apply_calib" name="apply_calib" output="screen" respawn="false">
       <param name="calib_file" value="$(find imu_calib)/../launch/imu_calib.yaml" />
@@ -41,7 +41,7 @@
      <node pkg="qingzhou_bringup" type="odom_ekf.py" name="odom_ekf" output="screen">
       <remap from="input" to="robot_pose_ekf/odom_combined"/>
       <remap from="output" to="/odom_ekf"/>
-   </node>      
+   </node>        
 
   <node pkg="tf" type="static_transform_publisher" name="base_link_to_imulink"
     args="-0.08 0.0 0.07 0.0 0.0  0.0 /base_link /imu_link 50" />

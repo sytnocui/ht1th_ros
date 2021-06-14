@@ -48,7 +48,7 @@ def TrafficLinePosition(ImgOri):
     # ResultImg = cv2.cvtColor(Input, cv2.COLOR_GRAY2RGB)
     OutputImg[OutputImg < 40] = 0
     # 取testposition行检测车道线位置
-    testposition = 80
+    testposition = 35
     LinePosition = np.where(OutputImg[testposition, :]>0)
     isNaN = np.size(LinePosition)#判断是否为nan
     LinePosition = np.sum(LinePosition)/np.size(LinePosition)

@@ -15,7 +15,7 @@ Yellow = np.array([11, 81, 178.])
 Green = np.array([35, 128, 10.]) # 35,128,10.
 Colors = (Red, Yellow, Green)
 ColorsName = ('Red', 'Yellow', 'Green')
-DistThreshold = 4000    # 颜色距离阈值
+DistThreshold = 8000    # 颜色距离阈值
 
 
 def JudgeLightColor(Light):
@@ -63,7 +63,7 @@ def TrafficLight(MarkerROI, Img):
 			Area = cv2.contourArea(contour)
 			Hull = cv2.convexHull(contour, False)
 			HullArea = cv2.contourArea(Hull)
-			if Area > 8 and Area < 1000 and Area / HullArea > 0.8:
+			if Area > 8 and Area < 100 and Area / HullArea > 0.8:
 				sel_contours.append(contour)
 				# 形态学提取外轮廓区域
 				MaskImg = np.zeros_like(LightImgGray)
@@ -84,6 +84,6 @@ def TrafficLight(MarkerROI, Img):
 		cv2.drawContours(LightImg, sel_contours, -1, (255, 0, 0), 3)
 		cv2.putText(Img, str([ColorsName[LightColor] for LightColor in LightColors]), (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 3)
 
-		cv2.imshow('LightImg', LightImg)
+		#cv2.imshow('LightImg', LightImg)
 		cv2.waitKey(15)
 		return LightColors, LightImg

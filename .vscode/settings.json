@@ -8,6 +8,23 @@
         "/opt/ros/melodic/lib/python2.7/dist-packages"
     ],
     "files.associations": {
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "cholesky": "cpp",
+        "core": "cpp",
+        "eigenvalues": "cpp",
+        "geometry": "cpp",
+        "householder": "cpp",
+        "iterativelinearsolvers": "cpp",
+        "jacobi": "cpp",
+        "lu": "cpp",
+        "orderingmethods": "cpp",
+        "qr": "cpp",
+        "svd": "cpp",
+        "sparse": "cpp",
+        "sparsecholesky": "cpp",
+        "sparsecore": "cpp",
+        "sparselu": "cpp",
+        "sparseqr": "cpp",
+        "stdvector": "cpp"
     }
 }

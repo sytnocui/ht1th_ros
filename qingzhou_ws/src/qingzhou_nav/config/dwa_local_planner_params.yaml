@@ -1,12 +1,12 @@
 DWAPlannerROS:
 
-  max_vel_x: 0.50  # 0.55
-  min_vel_x: 0.32 
+  max_vel_x: 0.4  # 0.55
+  min_vel_x: -0.33
 
   max_vel_y: 0.0
   min_vel_y: 0.0
 
-  max_vel_trans: 0.6 # choose slightly less than the base's capability
+  max_vel_trans: 0.3 # choose slightly less than the base's capability
   min_vel_trans: 0.05  # this is the min trans velocity when there is negligible rotational velocity
   trans_stopped_vel: 0.1
 

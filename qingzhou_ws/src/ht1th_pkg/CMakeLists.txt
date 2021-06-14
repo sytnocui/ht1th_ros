@@ -175,6 +175,9 @@ include_directories(
 add_executable(tcp_server_goal src/tcp_server_goal.cpp)
 target_link_libraries(tcp_server_goal ${catkin_LIBRARIES})
 
+add_executable(tf_listener src/tf_listener.cpp)
+target_link_libraries(tf_listener ${catkin_LIBRARIES})
+
 #############
 ## Install ##
 #############

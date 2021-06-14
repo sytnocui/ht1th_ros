@@ -116,15 +116,18 @@ void ros_setgoal(char buf[])
     goal.target_pose.pose.position.y = tcp_y;
 
     switch (buf[0]){
-    case 0x30:  goal.target_pose.pose.orientation.w = 1;
+    case 0x30:  
+                goal.target_pose.pose.orientation.w = 1;
                 ros::param::set("/ht1th/viewpara/nav_state",1);//设置状态机towait
                 break;//前往等待区
-    case 0x40:  goal.target_pose.pose.orientation.w = 0.707;
-                goal.target_pose.pose.orientation.z = -0.707;
+    case 0x40:  
+                 goal.target_pose.pose.orientation.w = 0.707;
+                 goal.target_pose.pose.orientation.z = -0.707;
                 ros::param::set("/ht1th/viewpara/nav_state",2);//设置状态机toload
                 break;//前往装货区
-    case 0x50:  goal.target_pose.pose.orientation.w = 0.707;
-                goal.target_pose.pose.orientation.z = 0.707;
+    case 0x50:  
+                 goal.target_pose.pose.orientation.w = 0.707;
+                 goal.target_pose.pose.orientation.z = 0.707;
                 ros::param::set("/ht1th/viewpara/nav_state",3);//设置状态机tounload
                 break;//前往卸货区
     default:break;

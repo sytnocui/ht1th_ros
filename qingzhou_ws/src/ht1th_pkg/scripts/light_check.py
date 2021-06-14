@@ -11,7 +11,7 @@ np.set_printoptions(suppress=True, precision=4)
 def LightDetect(ImgOri):
     CamPosition, MarkerROI = DealMarker(ImgOri)  # CamPosition：(x,y,z)
     # %% 实现交通灯颜色检测
-    if MarkerROI != None:
+    if MarkerROI is not None:
         LightColors, LightImg = TrafficLight(MarkerROI, ImgOri)  # LightColors：0-'Red', 1-'Yellow', 2-'Green'
 
     # LightImgName = 'TrafficLight'+str(Frame)+'.jpg'
@@ -24,8 +24,10 @@ def LightDetect(ImgOri):
         for Position in CamPosition:
             Distance = Distance + Position**2
 
-        if (0 or 1 in LightColors) and (Distance > 480000):
+        if (0 or 1 in LightColors) and (Distance > 350000):
             #TODO Distance阈值待定
+            print('stop!')
+            print('Distance:', Distance)
             return 0
         else:
             return 1
