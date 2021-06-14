@@ -26,4 +26,6 @@
     <!--    <remap from="/odom" to="/odom_ekf"/> --> 
   </node>
 
+   <node pkg="ht1th_pkg" type="pose_sub" name="pose_sub" output="screen"> </node>
+
 </launch>

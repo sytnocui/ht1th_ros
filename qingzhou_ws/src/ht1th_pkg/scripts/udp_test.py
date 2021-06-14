@@ -80,16 +80,11 @@ def lane_check(ImgOri):
         rospy.loginfo("[%0.2f m/s,%0.2f rad/s]",vel_msg.linear.x,vel_msg.angular.z)
 
 #####################################################################################
-
-def robot_tf_update():
-   pose_x = rospy.get_param('/ht1th/viewpara/pose_x')
-   pose_x = rospy.get_param('/ht1th/viewpara/pose_y')
-
-
 if __name__=="__main__":
     # Restart GStreamer
     # os.system('sudo systemctl restart nvargus-daemon')
     #client 发送端初始化
+    print('initiization')
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     server_address = ("192.168.43.86", 8888)  # 接收方 服务器的ip地址和端口号
 
@@ -99,39 +94,45 @@ if __name__=="__main__":
     #创建一个Publisher,发布cmd_vel的topic,消息类型为geometry_msgs::Twist,没有队列
     visual_vel_pub = rospy.Publisher("cmd_vel",Twist,queue_size=1)
     
-    #tf
+    #小车位置
     pose_x = 0.0
     pose_y = 0.0
     pose_yaw = 0.0
 
     #设置循环的频率
     rate = rospy.Rate(10)
-    
+    print('gonna open camera') 
     ImgOri = cam_capture()
+    print('Camera opened')
     cv2.waitKey(10)
-    print(ImgOri.shape)
+    # print(ImgOri.shape)
+    print('rospy.is_shutdown():', rospy.is_shutdown())
     while not rospy.is_shutdown():
         #0-stop    1-towait     2-toload    3-tounload   4-reached    5-pass_light    6-wrong 
         nav_state = rospy.get_param("/ht1th/viewpara/nav_state")#获取机器人状态
+        pose_x = rospy.get_param('/ht1th/viewpara/pose_x')
+        pose_y = rospy.get_param('/ht1th/viewpara/pose_y')
+        print('nav_state is:', nav_state,"   pose:",pose_x,pose_y)
         if (nav_state == 1) or (nav_state == 3):
             ImgOri = cam_capture()#拍照
             cv2.waitKey(10)
             # print(type(ImgOri))
             
             # print(ImgOri.shape)
-            print('Camera Opened')
+            print('Camera Opened, begin to take photo')
             if nav_state == 3:#前往卸货区
+                print('go to unloading,pose:',pose_x,pose_y)
                 if pose_x <= 1.3 and pose_y <= -7.5:
                    rospy.set_param('/ht1th/viewpara/nav_state', 5)
                 light_check(ImgOri)#红绿灯检测
             elif nav_state == 1: #and pose_y >= -5:#前往等待区
+                print('go to waiting,pose',pose_x,pose_y)
                 if pose_y >= -1:
                     rospy.set_param('/ht1th/viewpara/nav_state', 6)
                 lane_check(ImgOri)#车道线检测
-        
-        robot_tf_update()
 
         udp_thread()
 
         #按照循环频率延时
         rate.sleep()
+    print('exit')

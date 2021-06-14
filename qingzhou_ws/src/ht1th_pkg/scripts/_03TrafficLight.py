@@ -84,6 +84,6 @@ def TrafficLight(MarkerROI, Img):
 		cv2.drawContours(LightImg, sel_contours, -1, (255, 0, 0), 3)
 		cv2.putText(Img, str([ColorsName[LightColor] for LightColor in LightColors]), (10, 80), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 3)
 
-		#cv2.imshow('LightImg', LightImg)
+		# cv2.imshow('LightImg', LightImg)
 		cv2.waitKey(15)
 		return LightColors, LightImg
