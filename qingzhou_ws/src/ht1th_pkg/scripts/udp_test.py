@@ -68,7 +68,8 @@ def lane_check(ImgOri):
     else:
         print('lane_position:', lane_position)
         if -400<lane_position<400:
-            lane_angular = 0.001 * lane_position#TODO:计算角速度
+            print('lane position is:', lane_position)
+            lane_angular = 0.0005 * lane_position#TODO:计算角速度
         else:
             lane_angular = 0
         rospy.set_param("/ht1th/viewpara/visual_state",6)#检测到车道线赋为6
@@ -86,7 +87,7 @@ if __name__=="__main__":
     #client 发送端初始化
     print('initiization')
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_address = ("192.168.43.86", 8888)  # 接收方 服务器的ip地址和端口号
+    server_address = ("192.168.43.57", 8888)  # 接收方 服务器的ip地址和端口号
 
     #初始化ros节点
     rospy.init_node("ht1th_visual",anonymous=True)
@@ -130,7 +131,18 @@ if __name__=="__main__":
                 if pose_y >= -1:
                     rospy.set_param('/ht1th/viewpara/nav_state', 6)
                 lane_check(ImgOri)#车道线检测
-
+                
+                # send binary image
+                WarpedImg = cv2.warpPerspective(ImgOri, H, (1000, 1000))
+                ImgGray = cv2.cvtColor(WarpedImg, cv2.COLOR_BGR2GRAY)
+                th, MaskImg = cv2.threshold(ImgGray, 165, 255, cv2.THRESH_BINARY)
+                kernel = np.ones((3, 3), np.uint8)
+                MaskImg = cv2.dilate(MaskImg, kernel, iterations=1)
+                MaskImg = cv2.erode(MaskImg, kernel, iterations=2)
+                MaskImg = cv2.dilate(MaskImg, kernel, iterations=1)
+                ImgOri = MaskImg
+        
+        
         udp_thread()
 
         #按照循环频率延时

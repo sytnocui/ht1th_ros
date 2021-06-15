@@ -36,13 +36,14 @@ def gstreamer_pipeline(  # 定义GStreamerPipeline
                 display_height,
             )
     )
+cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
+
 
 def cam_capture():#拍摄照片函数
-    cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=0), cv2.CAP_GSTREAMER)
     print(cap.isOpened())
     if cap.isOpened():
         ret, img = cap.read()
         if ret == True:
             UndistImg = cv2.undistort(img, K, Dist)
             return UndistImg
-    cap.release()
+        cap.release()
