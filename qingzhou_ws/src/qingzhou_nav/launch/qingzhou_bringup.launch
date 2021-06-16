@@ -5,7 +5,7 @@
       <param name="mcuserialport" value="/dev/stm32board" type="string"/> 
       <param name="mcubaudrate" value = "115200" type = "int"/> 
 
-      <param name="calibrate_lineSpeed" value = "1" type = "int"/> 
+      <param name="calibrate_lineSpeed" value = "0" type = "int"/> 
       <param name="calibrate_angularSpeed" value = "0" type = "int"/> 
       <param name="ticksPerMeter" value = "5646" type = "int"/>      <!-- 1235  -->
       <param name="ticksPer2PI" value = "14017" type = "int"/>             <!--  26500  5800  --> 

@@ -125,7 +125,7 @@ void actuator::run()
 	if(calibrate_lineSpeed == 1){
 		printf("x=%.2f,y=%.2f,th=%.2f,linearSpeed=%.2f,,detEncode=%.2f,LeftticksPerMeter = %lld,rightticksPerMeter = %lld,batteryVoltage = %.2f\n",x,y,th,linearSpeed,detEncode,LeftticksPerMeter,rightticksPerMeter,batteryVoltage);
 	}
-		
+		printf("/nready to send/n");
 	//send command to stm32
 	sendCarInfoKernel();                                                     
 	geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th); 
@@ -194,7 +194,7 @@ void actuator::sendCarInfoKernel()
 
     buf[3] = (int)moveBaseControl.TargetAngleDir;	    //targetangleDirection 0-->go straight,0x10-->turn left,0x20-->turn right (not used)
     buf[4] = (int)abs(moveBaseControl.TargetAngle);	    //targetangle
-    buf[5] = (int)abs(moveBaseControl.TargetSpeed);	    //targetSpeed
+    buf[5] = (int)moveBaseControl.TargetSpeed;	    //targetSpeed
     buf[6] = (int)moveBaseControl.TargetModeSelect;	    //0-->person control,1-->auto control (not used)
     buf[7] = (int)moveBaseControl.TargetShiftPosition;  //targetshiftposition  0-->P stop;1-->R;2-->D. (not used)
   
@@ -205,8 +205,8 @@ void actuator::sendCarInfoKernel()
     buf[9] = (unsigned char)(sum);   
     printf("  \nmoveBaseControl.TargetAngle = %d \n" ,  buf[4]);
     printf("TargetAngleDir = %d\n", buf[3]) ;     
-printf("TargetSpeed = %d\n", buf[5]) ;
-printf("TargetShiftPosition = %d\n", buf[7]) ;
+    printf("TargetSpeed = %d\n", buf[5]) ;
+    printf("TargetShiftPosition = %d\n", buf[7]) ;
     size_t writesize = ser.write(buf,10);
 }
 
