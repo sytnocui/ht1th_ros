@@ -1,6 +1,6 @@
 ht1th:
   viewpara:
-    nav_state: 0               #0-stop    1-towait     2-toload    3-tounload   4-reached   5-pass_light  6-wrong
+    nav_state: 0               #0-stop    1-towait     2-toload    3-tounload   4-reached   5-pass_light   6-pass_lane  7-wrong
     visual_state: 0            #0-close   1-light_en   2-light_dis   5-check_lane   6-lane
     pose_x: 0.0
     pose_y: 0.0

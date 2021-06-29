@@ -667,6 +667,7 @@ namespace move_base {
 
     geometry_msgs::PoseStamped goal = goalToGlobalFrame(move_base_goal->target_pose);
   
+
 /*添加清除obstacle图层*/
     ROS_ERROR("-sunyoop- clean all the o -before-");
     planner_costmap_ros_->resetLayers(); //消除地图数据和非costmap中的动态障碍
@@ -675,9 +676,10 @@ namespace move_base {
  
     ros::Duration(0.5).sleep();//延迟0.5秒，为了将地图和动态障碍再次刷新上，之后再下发目标位置。
 
- /**/   
-
+ /**/ 
     publishZeroVelocity();
+      
+
     //we have a goal so start the planner
     boost::unique_lock<boost::recursive_mutex> lock(planner_mutex_);
     planner_goal_ = goal;

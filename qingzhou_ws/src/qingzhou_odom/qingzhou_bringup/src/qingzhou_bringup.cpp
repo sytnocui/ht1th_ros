@@ -48,7 +48,7 @@ actuator::actuator(ros::NodeHandle handle)
       std::cout<<"[qingzhou_actuator-->]"<<"Serial port failed!"<<std::endl;                  
     } 
 	
-    sub_move_base = handle.subscribe("smooth_cmd_vel",1,&actuator::callback_move_base,this);   
+    sub_move_base = handle.subscribe("cmd_vel",1,&actuator::callback_move_base,this);   
 
     pub_imu = handle.advertise<sensor_msgs::Imu>("raw", 5);	                                                 
     pub_mag = handle.advertise<sensor_msgs::MagneticField>("imu/mag", 5);                                    
