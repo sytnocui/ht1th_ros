@@ -48,7 +48,7 @@ actuator::actuator(ros::NodeHandle handle)
       std::cout<<"[qingzhou_actuator-->]"<<"Serial port failed!"<<std::endl;                  
     } 
 	
-    sub_move_base = handle.subscribe("cmd_vel",1,&actuator::callback_move_base,this);   
+    sub_move_base = handle.subscribe("smooth_cmd_vel",1,&actuator::callback_move_base,this);   
 
     pub_imu = handle.advertise<sensor_msgs::Imu>("raw", 5);	                                                 
     pub_mag = handle.advertise<sensor_msgs::MagneticField>("imu/mag", 5);                                    
@@ -74,7 +74,7 @@ void actuator::callback_move_base(const geometry_msgs::Twist::ConstPtr &msg) //�
    moveBaseControl.TargetAngle+=60;                                          //stm32 program has subtract 60
    
    printf("%.2f,%.2f,%d,%d\n",msg->linear.x,msg->angular.z,                  
-	       abs(moveBaseControl.TargetSpeed),abs(moveBaseControl.TargetAngle));	   
+	       moveBaseControl.TargetSpeed,moveBaseControl.TargetAngle);	   
 
 }
   
@@ -125,7 +125,7 @@ void actuator::run()
 	if(calibrate_lineSpeed == 1){
 		printf("x=%.2f,y=%.2f,th=%.2f,linearSpeed=%.2f,,detEncode=%.2f,LeftticksPerMeter = %lld,rightticksPerMeter = %lld,batteryVoltage = %.2f\n",x,y,th,linearSpeed,detEncode,LeftticksPerMeter,rightticksPerMeter,batteryVoltage);
 	}
-		printf("/nready to send/n");
+
 	//send command to stm32
 	sendCarInfoKernel();                                                     
 	geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(th); 
@@ -187,24 +187,33 @@ void actuator::run()
 //发送小车数据到下位机
 void actuator::sendCarInfoKernel()
 {
+     if(moveBaseControl.TargetSpeed >= 0)
+    {
+        moveBaseControl.TargetShiftPosition=2;
+    }
+    else if(moveBaseControl.TargetSpeed<0)
+    {
+        moveBaseControl.TargetShiftPosition=1;
+    }
     unsigned char buf[23] = {0};
     buf[0] = 0xa5;	                                        
     buf[1] = 0x5a;	                                        
     buf[2] = 0x06;	                                            
-
+    
     buf[3] = (int)moveBaseControl.TargetAngleDir;	    //targetangleDirection 0-->go straight,0x10-->turn left,0x20-->turn right (not used)
     buf[4] = (int)abs(moveBaseControl.TargetAngle);	    //targetangle
-    buf[5] = (int)moveBaseControl.TargetSpeed;	    //targetSpeed
+    buf[5] = (int)abs(moveBaseControl.TargetSpeed);	    //targetSpeed
     buf[6] = (int)moveBaseControl.TargetModeSelect;	    //0-->person control,1-->auto control (not used)
     buf[7] = (int)moveBaseControl.TargetShiftPosition;  //targetshiftposition  0-->P stop;1-->R;2-->D. (not used)
   
-    buf[8] = 0;		                                        
+    buf[8] = 0;		           
+   
+
     unsigned char sum = 0;
     for(int i = 2; i < 19; ++i)                             
         sum += buf[i];
     buf[9] = (unsigned char)(sum);   
-    printf("  \nmoveBaseControl.TargetAngle = %d \n" ,  buf[4]);
-    printf("TargetAngleDir = %d\n", buf[3]) ;     
+    printf("  \nmoveBaseControl.TargetAngle = %d \n" ,  buf[4]);     
     printf("TargetSpeed = %d\n", buf[5]) ;
     printf("TargetShiftPosition = %d\n", buf[7]) ;
     size_t writesize = ser.write(buf,10);

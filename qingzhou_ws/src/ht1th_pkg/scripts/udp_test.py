@@ -87,7 +87,7 @@ if __name__=="__main__":
     #client 发送端初始化
     print('initiization')
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_address = ("192.168.43.57", 8888)  # 接收方 服务器的ip地址和端口号
+    server_address = ("<broadcast>", 8888)  # 接收方 服务器的ip地址和端口号
 
     #初始化ros节点
     rospy.init_node("ht1th_visual",anonymous=True)

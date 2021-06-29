@@ -2,5 +2,5 @@
 <launch>
   <rosparam file="$(find ht1th_pkg)/config/ht1th.yaml" command="load" /> <!--ht1th_para--> 
   <node pkg="ht1th_pkg" type="tcp_server_goal" name="tcp_server_goal" output="screen"> </node>
-  <node pkg="ht1th_pkg" type="udp_test.py" name="udp_test" output="screen"> </node> 
+  <!--<node pkg="ht1th_pkg" type="udp_test.py" name="udp_test" output="screen"> </node>--> 
 </launch>
